@@ -22,7 +22,6 @@ class TaskController extends Controller
         // 選ばれたフォルダに紐づくタスクを取得する
         // $tasks = $current_folder->tasks()->get(); 
         $sort = $request->sort;
-        var_dump($request->query());
         $tasks = Task::paginate(5);
 
         return view('tasks/index', [
@@ -49,6 +48,14 @@ class TaskController extends Controller
         $task = new Task();
         $task->title = $request->title;
         $task->due_date = $request->due_date;
+
+        // 画像フォームでリクエストした画像を取得
+        $img = $request->file('image');
+        if (isset($img)) {
+            // storage > public > img配下に画像が保存される
+            $path = $img->store('img','public');
+            $task->img_path = $path;
+        }
 
         $current_folder->tasks()->save($task);
 
@@ -98,21 +105,5 @@ class TaskController extends Controller
         return redirect()->route('tasks.index', [
             'id' => $task->folder_id,
         ]);
-    }
-
-    public function upload(Request $request)
-    {
-        // ディレクトリ名
-        $dir = 'sample';
-
-        // アップロードされたファイル名を取得
-        $file_name = $request->file('image')->getClientOriginalName();
-
-        // 取得したファイル名で保存
-        $request->file('image')->storeAs('public' , $file_name);
-
-        var_dump($file_name);
-
-        return redirect('/');
     }
 }
