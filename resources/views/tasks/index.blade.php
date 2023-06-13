@@ -28,7 +28,11 @@
             @foreach($tasks as $task)
               <tr>
                 <td class="col-md-2">
-                  <img src="{{ Storage::url($task->img_path) }}" width="100%">
+                @if($task->img_path == null)
+                  <img src="{{ asset('noimage.jpg') }}" width="50px" height="50px">
+                @else
+                <img src="{{ Storage::url($task->img_path) }}" width="50px" height="50px">
+                @endif
                 </td>
                 <td class="col-md-8">{{ $task->title }}</td>
                 <td class="col-md-1">
