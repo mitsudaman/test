@@ -33,12 +33,12 @@ a.my-navbar-item:hover {
   color: #ffffff;
 }
 
-.table td:nth-child(3),
+/* .table td:nth-child(3),
 .table td:nth-child(4) ,
 .table td:nth-child(5) {
   white-space: nowrap;
   width: 1px;
-}
+} */
 
 .form-control[disabled],
 .form-control[readonly] {
